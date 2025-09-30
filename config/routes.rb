@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   root "main#index"
   resources :services
   resources :orders, only: [:new, :create, :update, :destroy, :show]
+  resources :contacts
   # Defines the root path route ("/")
   # root "articles#index"
 end

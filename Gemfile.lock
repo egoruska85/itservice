@@ -138,6 +138,9 @@ GEM
       net-imap
       net-pop
       net-smtp
+    mail_form (1.11.0)
+      actionpack (>= 7.0)
+      activemodel (>= 7.0)
     marcel (1.0.2)
     matrix (0.4.2)
     method_source (1.0.0)
@@ -221,6 +224,9 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    simple_form (5.3.1)
+      actionpack (>= 5.2)
+      activemodel (>= 5.2)
     sprockets (4.2.0)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -272,6 +278,7 @@ DEPENDENCIES
   devise-i18n
   importmap-rails
   jbuilder
+  mail_form
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.2)
   rails-i18n
@@ -279,6 +286,7 @@ DEPENDENCIES
   rails_admin-i18n
   sassc-rails
   selenium-webdriver
+  simple_form
   sprockets-rails
   sqlite3 (~> 1.4)
   stimulus-rails
