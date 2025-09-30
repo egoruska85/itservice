@@ -1,6 +1,96 @@
 <div class="container" id="contacts" >
   <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded border border-primary" style="background-color: rgba(255, 255, 255, 0.9);">
-    <center><h1 style="font-family: bankgothic;"><%= @about.title %></h1></center>
-    <%= simple_format @about.body %>
+    <center><h1 style="font-family: bankgothic;">Наши контакты</h1></center>
+
+      <div class="row">
+        <div class="col-md-6">
+          <%= phone_to @about.phone, class:'btn btn-info', style:'max-height: 38px;' do %>
+            <p style="font-size: 20px;"><i class="bi bi-telephone-outbound-fill"></i><%= @about.phone %></p>
+          <% end %>
+          <br><br>
+          <%= link_to "https://api.whatsapp.com/send/?phone=(#{@about.whatsapp})", class:"btn btn-success" do %>
+            <i class="bi bi-whatsapp">WhatsApp</i>
+          <% end %>
+          <br><br>
+          <%= link_to "https://telegram.me/#{@about.telegram}", class:"btn btn-primary" do %>
+            <i class="bi bi-telegram">Telegram</i>
+          <% end %>
+          <br><br>
+          <%= mail_to @about.email, class:"btn btn-primary" do %>
+            <i class="bi bi-mail">Эл. почта: <%= @about.email %></i>
+          <% end %>
+          <br><br>
+          <div class="row">
+            <div class="col-3">
+              <h6>Наш адрес: </h6>
+            </div>
+            <div class="col-9">
+              <h6>
+                <%= simple_format @about.address %>
+              </h6>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <%= form_for @contact do |f| %>
+          <!--</div>-->
+          <!--<form method="POST" id="contactForm" name="contactForm" class="contactForm">-->
+          <div class="row">
+            <center><h1 style="font-family: bankgothic; font-size: 20px;">Обратный связь</h1></center>
+            <div class="col-md-6">
+              <div class="form-group">
+                <!--<label class="label" for="name">Full Name</label>
+                <input type="text" class="form-control" name="name" id="name" placeholder="Name">-->
+                <%= f.label t('contact.name') %>
+                <%= f.text_field :name, class:'form-control', placeholder: t('contact.name')%>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <!--<label class="label" for="email">Email Address</label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="Email">-->
+                <%= f.label t('contact.mail') %>
+                <%= f.text_field :email, class:'form-control', placeholder: t('contact.mail')%>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <!--<label class="label" for="subject">Subject</label>
+                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject">-->
+                <%= f.label t('contact.sales_phone') %>
+                <%= f.text_field :phone, class:'form-control', placeholder: t('contact.sales_phone'), value:'+'%>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <!--<label class="label" for="#">Message</label>
+                <textarea name="message" class="form-control" id="message" cols="30" rows="4" placeholder="Message"></textarea>-->
+                <%= f.label t('contact.message') %>
+                <%= f.text_area :message, class:'form-control', placeholder: t('contact.message'), rows:"6" %>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <!--<label class="label" for="#">Message</label>
+                <textarea name="message" class="form-control" id="message" cols="30" rows="4" placeholder="Message"></textarea>-->
+                <%= f.file_field :file, class:'form-control', type:'file', id:'formFileMultiple', multiple: true %>
+              </div>
+            </div>
+           <br><br>
+            <div class="col-md-12">
+              <div class="form-group">
+                <%= f.submit 'Отправить', class:'btn btn-primary'%>
+                <br><br>
+                <!--<input type="submit" value="Send Message" class="btn btn-primary">-->
+                <div class="submitting"></div>
+              </div>
+            </div>
+          </div>
+          <!--</form>-->
+          </div>
+          <% end %>
+        </div>
+      </div>
+
   </div>
 </div>
