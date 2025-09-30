@@ -1,0 +1,49 @@
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo"><i class="bi bi-person-fill"></i></button>
+
+<% if current_user == nil %>
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+             <%= link_to new_user_session_path, class:'btn btn-success' do %>
+              <i class="bi bi-person-check-fill"></i><br>Войти
+             <% end %>
+          </div>
+          <div class="modal-content">
+             <%= link_to new_user_registration_path, class:'btn btn-warning' do %>
+             <i class="bi bi-person-plus-fill"></i><br>
+              Регистрация пользователя
+             <% end %>
+          </div>
+        </div>
+      </div>
+<% end %>
+<% if current_user %>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content" style="background: #292929;">
+   <center>
+     <%= button_to destroy_user_session_path, class:'btn btn-dark', method: :delete do %>
+      <i class="bi bi-person-dash"></i><br>Выйти
+     <% end %>
+    </center>
+</div>
+<div class="modal-content">
+   <%= link_to edit_user_registration_path(current_user.id), class:'btn btn-success' do %>
+    <i class="bi bi-pencil-fill"></i>
+    <br>
+    Редактирование пользователя
+   <% end %>
+</div>
+<br>
+<% if current_user.admin == true %>
+<div class="modal-content">
+   <%= link_to "/rails_admin", class:'btn btn-danger' do %>
+    <i class="bi bi-tools"></i>
+    <br>
+    Админка
+   <% end %>
+</div>
+<% end %>
+</div>
+</div>
+<% end %>

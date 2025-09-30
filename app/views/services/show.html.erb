@@ -1,0 +1,36 @@
+<head>
+
+</head>
+<body>
+
+  <%= render '/services/navbar' %>
+  <center>
+  <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded" style="background: white; width: 350px;">
+      <center><h1>Услуги и цены</h1></center>
+  </div>
+  </center>
+  <div class="container">
+    <div class="row">
+
+
+
+        <div class="col-12 col-lg-6">
+          <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded" style="background: white; min-height: 200px;">
+              <b><h5><%= @service.name %></h5></b>
+          </div>
+        </div>
+      <div class="col-12 col-lg-6">
+        <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded" style="background: white; min-height: 200px;">
+          <%= @service.explanation %>
+        </div>
+      </div>
+    </div>
+      <center>
+        <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded" style="background: white; width: 360px;">
+            <h3>Цена: &nbsp; &nbsp;<span class="badge text-bg-success"><%= @service.price %> &#8381;</span></h3>
+        </div>
+      </center>
+
+
+  </div>
+</body>

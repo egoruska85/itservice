@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= @organization.name %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <%= stylesheet_link_tag 'slide', media: 'all' %>
+    <%= javascript_include_tag 'slide', 'data-turbolinks-track': 'reload' %>
+
+
+    
+    <style>
+      body {
+        background-image: url('/images/digitization-g47f47bac3_1920.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <%= yield %>
+    <nav class="navbar bg-body-tertiary" style="background: linear-gradient(to left, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0)); height: 53px;">
+      <div class="container">
+        <ul class="nav ms-auto">
+          <%= @organization.name %>&copy; <%= Time.now.year %> <%= t('footer.rights')%>
+        </ul>
+      </div>
+    </nav>
+  </body>
+</html>

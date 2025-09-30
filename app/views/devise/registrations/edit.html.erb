@@ -1,0 +1,53 @@
+<center><h1><%= t('.title', resource: resource_name.to_s.humanize) %></h1></center>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= bootstrap_devise_error_messages! %>
+<center>
+  <div style="width: 400px;">
+    <div class="field text-white">
+      <%= f.label 'Пользователь', class:"text-white" %><br />
+      <%= f.text_field :username, autofocus: true, class: 'form-control' %>
+    </div>
+    <div class="form-group text-white">
+      <%= f.label :email %>
+      <%= f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-control' %>
+    </div>
+    <div class="field text-white">
+      <%= f.label 'Номер телефона', class:"text-white" %><br />
+      <%= f.text_field :phone, autofocus: true, class: 'form-control' %>
+    </div>
+    <div class="field text-white">
+      <%= f.label 'Ваш адрес', class:"text-white" %><br />
+      <%= f.text_field :address, autofocus: true, class: 'form-control' %>
+    </div>
+    <div class="form-group text-white">
+      <%= f.label :password %>
+      <%= f.password_field :password, autocomplete: 'new-password', class: 'form-control' %>
+
+      <small class="form-text text-white"><%= t('.leave_blank_if_you_don_t_want_to_change_it') %></small>
+    </div>
+
+    <div class="form-group text-white">
+      <%= f.label :password_confirmation %>
+      <%= f.password_field :password_confirmation, autocomplete: 'new-password', class: 'form-control'  %>
+    </div>
+
+    <div class="form-group text-white">
+      <%= f.label :current_password %>
+      <%= f.password_field :current_password, autocomplete: 'current-password', class: 'form-control' %>
+
+      <small class="form-text text-white"><%= t('.we_need_your_current_password_to_confirm_your_changes') %></small>
+    </div>
+
+    <div class="form-group text-white">
+      <%= f.submit t('.update'), class: 'btn btn-primary' %>
+    </div>
+    <% end %>
+<br>
+    <p class="form-group text-white"><%= t('.unhappy') %>? <%= link_to t('.cancel_my_account'), registration_path(resource_name), data: { confirm: t('.are_you_sure') }, method: :delete, class:'btn text-white btn-danger' %>.</p>
+
+    <%= link_to 'Назад', :back, class:'btn text-white btn-warning' %>
+    <br><br>
+    <%= link_to 'На главную', root_path, class:"btn btn-info" %>
+  </div>
+</center>

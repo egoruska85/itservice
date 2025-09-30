@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  service: one
+  phone: MyString
+  date: 2023-04-09
+  time: 2023-04-09 11:55:48
+  verificate: false
+  done: false
+
+two:
+  user: two
+  service: two
+  phone: MyString
+  date: 2023-04-09
+  time: 2023-04-09 11:55:48
+  verificate: false
+  done: false

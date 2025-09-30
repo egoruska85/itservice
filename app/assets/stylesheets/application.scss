@@ -1,0 +1,12 @@
+@import "bootstrap";
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css");
+
+@font-face {
+  font-family: "bankgothic";
+
+  /* Браузер сначала попробует найти шрифт локально */
+  src: local("bankgothic"),
+       /* Если не получилось, загрузит woff2 */
+       url("/fonts/bankgothicmdbt_medium.otf") format("woff"),
+       /* Если браузер не поддерживает woff2, загрузит woff */
+}

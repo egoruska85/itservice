@@ -1,0 +1,25 @@
+
+
+    <table class="table">
+      <thead>
+        <tr>
+          <center><h3>Компьютеры и ноутбуки</h3></center>
+          <hr>
+          <th scope="col">Номер услуги</th>
+          <th scope="col">Наименование работ</th>
+          <th scope="col">Цена за работу</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <% @services_1.each do |service| %>
+        <tr>
+          <th scope="row"><%= service.number %></th>
+          <td><%= link_to "#{service.name}", service_path(service), class:"nav-link" %></td>
+          <td><%= service.price %> &#8381; </td>
+
+        </tr>
+        <% end %>
+
+      </tbody>
+    </table>

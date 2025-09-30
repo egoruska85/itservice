@@ -1,0 +1,39 @@
+<center><h1><%= t('.sign_up') %></h1></center>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= bootstrap_devise_error_messages! %>
+<center>
+  <div style="width: 350px;">
+      <div class="field text-white">
+        <%= f.label 'Имя пользователя'%><br />
+        <%= f.text_field :username, autofocus: true, class: 'form-control' %>
+      </div>
+      <div class="form-group text-white">
+        <%= f.label :email %>
+        <%= f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-control' %>
+      </div>
+
+      <div class="form-group text-white">
+        <%= f.label :password %>
+        <%= f.password_field :password, autocomplete: 'current-password', class: 'form-control' %>
+
+        <% if @minimum_password_length %>
+          <small class="form-text text-white"><%= t('devise.shared.minimum_password_length', count: @minimum_password_length) %></small>
+        <% end %>
+      </div>
+
+      <div class="form-group text-white">
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation, autocomplete: 'current-password', class: 'form-control' %>
+      </div>
+      <br>
+      <div class="form-group text-white">
+        <%= f.submit t('.sign_up'), class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+    <br>
+    <%= render 'devise/shared/links' %>
+
+    <%= link_to 'На главную', root_path, class:"btn btn-info" %>
+  </div>
+</center>

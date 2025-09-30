@@ -1,0 +1,42 @@
+<div class="container-fluid">
+  <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded" style="background: rgba(28, 36, 237, 0.5);">
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <% @carouseles.each do |i| %>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= @a + i.id %>" aria-label="Slide <%= @a + i.id + 1 %>"></button>
+        <% end %>
+      </div>
+      <div class="carousel-inner container-fluid d-md-block">
+        <div class="carousel-item active">
+          <%= link_to @carousel_active.link do %>
+          <%= image_tag(@carousel_active.image, class:"d-block w-100", alt:"...") %>
+          <% end %>
+          <div class="carousel-caption d-none d-md-block">
+            <h1><%= @carousel_active.title %></h1>
+            <p><%= @carousel_active.text %></p>
+          </div>
+        </div>
+        <% @carouseles.each do |carousel| %>
+        <div class="carousel-item">
+          <%= link_to carousel.link do %>
+            <%= image_tag(carousel.image, class:"d-block w-100", alt:"...") %>
+          <% end %>
+            <div class="carousel-caption d-none d-md-block">
+              <h1><%= carousel.title %></h1>
+              <p><%= carousel.text %></p>
+            </div>
+        </div>
+        <% end %>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+</div>

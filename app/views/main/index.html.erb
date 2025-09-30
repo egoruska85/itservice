@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <style>
+  /* Стили для фиксированного значка */
+  #telegram-icon {
+    position: fixed;           /* фиксируем относительно окна */
+    right: 20px;               /* отступ справа */
+    bottom: 20px;              /* отступ снизу */
+    width: 50px;               /* ширина и высота значка */
+    height: 50px;
+    cursor: pointer;
+    z-index: 1000;             /* чтобы быть поверх других элементов */
+    transition: transform 0.3s;
+  }
+
+  #telegram-icon:hover {
+    transform: scale(1.1);     /* при наведении немного увеличиваем */
+  }
+</style>
+  </head>
+
+
+
+  <body>
+    <%= render "navbar" %>
+    <%= render "carousel" %>
+    <%= render "about" %>
+    <%= render "contacts" %>
+    <%= render "/layouts/telegram" %>
+
+
+  </body>
+</html>
+
+
+
+
+<!-- CSS -->
