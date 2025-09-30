@@ -1,3 +1,16 @@
 ru:
   footer:
     rights: "Все права защищены."
+  contact:
+    mail: "E-mail"
+    phone: "Наши номера телефонов: "
+    address: "Наш адрес: "
+    text: "Текст"
+    contacts: "наши контакты"
+    file: "Прикрепить файлы"
+    write: "СВЯЗАТЬСЯ С НАМИ"
+    name: "Имя"
+    send: "Отправить"
+    message: "Сообщение"
+    sales_phone: "Ваш номер телефона"
+    fax: "Факс"
