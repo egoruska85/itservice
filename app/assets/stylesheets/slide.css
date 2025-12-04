@@ -43,7 +43,7 @@
   height: 50px;
   color: #fff;
   text-align: center;
-  background: rgb(0 0 0 / 20%);
+  background: rgba(0, 0, 0, 0.2);
   border: none;
   transform: translateY(-50%);
   cursor: pointer;
@@ -65,7 +65,7 @@
 .itc-slider__btn:focus {
   color: #fff;
   text-decoration: none;
-  background: rgb(0 0 0 / 30%);
+  background: rgba(0, 0, 0, 0.3);
   outline: 0;
 }
 
@@ -108,7 +108,7 @@
   margin-right: 3px;
   margin-left: 3px;
   text-indent: -999px;
-  background-color: rgb(255 255 255 / 50%);
+  background-color: rgba(255, 255, 255, 0.5);
   background-clip: padding-box;
   border-top: 15px solid transparent;
   border-bottom: 15px solid transparent;
@@ -116,5 +116,5 @@
 }
 
 .itc-slider__indicator_active {
-  background-color: rgb(255 255 255 / 90%);
+  background-color: rgba(255, 255, 255, 0.5);
 }
