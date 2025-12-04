@@ -14,8 +14,7 @@
 
       <% if devise_mapping.rememberable? %>
         <div class="form-group form-check">
-          <%= f.check_box :remember_me, class: 'form-check-input', class:"text-white" %>
-  
+
             <%= resource.class.human_attribute_name('remember_me') %>
           <% end %>
         </div>
