@@ -58,6 +58,8 @@ GEM
     activerecord (7.0.4.2)
       activemodel (= 7.0.4.2)
       activesupport (= 7.0.4.2)
+    activerecord-postgresql-adapter (0.0.1)
+      pg
     activestorage (7.0.4.2)
       actionpack (= 7.0.4.2)
       activejob (= 7.0.4.2)
@@ -161,6 +163,7 @@ GEM
     nokogiri (1.14.2-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
+    pg (1.6.2-x86_64-linux)
     popper_js (2.11.6)
     public_suffix (5.0.1)
     puma (5.6.5)
@@ -269,6 +272,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  activerecord-postgresql-adapter
   bootsnap
   bootstrap
   capybara
@@ -279,6 +283,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   mail_form
+  pg
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.2)
   rails-i18n
