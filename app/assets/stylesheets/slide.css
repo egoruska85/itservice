@@ -43,7 +43,7 @@
   height: 50px;
   color: #fff;
   text-align: center;
-  background: rgb(0 0 0 / 20%);
+  background: rgba(0, 0, 0, 0.2);
   border: none;
   transform: translateY(-50%);
   cursor: pointer;
