@@ -1,8 +1,7 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top" style="background: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0))">
   <div class="container-fluid">
-    <%= link_to root_path, class:"nav-link", style:"font-family: bankgothic; font-weight: 900; font-size: 20px; color: blue;" do %>
-      <%= @organization.name %>
-    <% end %>
+    <%= render 'logo/logo' %>
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
