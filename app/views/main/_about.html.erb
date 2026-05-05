@@ -1,6 +1,50 @@
-<div class="container" id="about">
-  <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded border border-primary" style="background-color: rgba(255, 255, 255, 0.9);">
-    <center><h1 style="font-family: bankgothic;"><%= @about.title %></h1></center>
-    <%= simple_format @about.body %>
-  </div>
+<div class="container py-5" id="about">
+  <% if @about.present? %>
+
+    <%# Обертка с мягкой тенью, без грубых рамок и с сильным скруглением %>
+    <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5" style="background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px);">
+
+      <div class="text-center mb-4">
+        <%# Заголовок с акцентным цветом и правильным семейством шрифтов %>
+        <h1 class="display-6 fw-bold text-dark mb-3" style="font-family: 'BankGothic', sans-serif;">
+          <%= @about.title %>
+        </h1>
+
+        <%# Декоративный разделитель под заголовком %>
+        <div class="d-inline-block bg-primary rounded-pill" style="width: 60px; height: 4px;"></div>
+      </div>
+
+      <%# Блок контента с увеличенным размером шрифта и хорошим межстрочным интервалом %>
+      <div class="fs-5 text-secondary lh-lg about-content">
+        <%= simple_format @about.body %>
+      </div>
+
+    </div>
+
+  <% else %>
+
+    <%# Красивая пустая заглушка в виде карточки %>
+    <div class="card border-0 shadow-sm rounded-4 text-center p-5">
+      <div class="card-body">
+        <div class="bg-light d-inline-flex p-3 rounded-circle mb-3">
+          <i class="bi bi-info-circle fs-2 text-muted"></i>
+        </div>
+        <h3 class="text-dark fw-bold mb-2" style="font-family: 'BankGothic', sans-serif;">О нас</h3>
+        <p class="text-muted mb-0">Информация заполняется администратором в панели управления.</p>
+      </div>
+    </div>
+
+  <% end %>
 </div>
+
+<style>
+  /* Сглаживание углов */
+  .rounded-4 {
+    border-radius: 1rem !important;
+  }
+
+  /* Делаем текст в simple_format чуть аккуратнее */
+  .about-content p:last-child {
+    margin-bottom: 0;
+  }
+</style>

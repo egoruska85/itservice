@@ -2,35 +2,101 @@
 
 </head>
 <body>
-
   <%= render '/services/navbar' %>
-  <center>
-  <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded" style="background: white; width: 350px;">
-      <center><h1>Услуги и цены</h1></center>
-  </div>
-  </center>
-  <div class="container">
-    <div class="row">
 
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-12 col-xl-10">
 
+        <!-- Ссылка Назад (Улучшает навигацию) -->
+        <div class="mb-4">
+          <%= link_to services_path, class: "text-decoration-none text-secondary hover-primary" do %>
+            <i class="bi bi-arrow-left me-2"></i>Назад к списку услуг
+          <% end %>
+        </div>
 
-        <div class="col-12 col-lg-6">
-          <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded" style="background: white; min-height: 200px;">
-              <b><h5><%= @service.name %></h5></b>
+        <!-- Главная карточка услуги -->
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden" style="background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px);">
+          <div class="row g-0">
+
+            <!-- Левая колонка: Детали услуги -->
+            <div class="col-12 col-md-8 p-4 p-md-5">
+
+              <%# Категория (можно захардкодить или выводить динамически) %>
+              <div class="text-uppercase text-primary fw-bold mb-2" style="font-size: 0.8rem; letter-spacing: 1px;">
+                Детали услуги
+              </div>
+
+              <%# Название услуги %>
+              <h1 class="display-6 fw-bold text-dark mb-4" style="font-family: 'BankGothic', sans-serif;">
+                <%= @service.name %>
+              </h1>
+
+              <%# Описание услуги %>
+              <div class="fs-5 text-secondary lh-lg">
+                <% if @service.explanation.present? %>
+                  <%= simple_format @service.explanation %>
+                <% else %>
+                  <p class="text-muted">Описание для данной услуги временно отсутствует. Вы можете уточнить подробности у нашего специалиста.</p>
+                <% end %>
+              </div>
+            </div>
+
+            <!-- Правая колонка: Стоимость и Действие -->
+            <div class="col-12 col-md-4 bg-light border-start d-flex flex-column justify-content-center p-4 p-md-5 text-center">
+
+              <div class="mb-2 text-secondary fw-semibold">Стоимость работы</div>
+
+              <%# Цена %>
+              <div class="display-5 fw-bold text-dark mb-4">
+                <%= number_with_delimiter(@service.price, delimiter: " ") %>
+                <span class="fs-3 fw-normal text-muted">₽</span>
+              </div>
+
+              <%# Кнопка заказа %>
+              <%= link_to new_order_path(service_id: @service.id), class: "btn btn-success btn-lg w-100 fw-bold py-3 hover-lift shadow-sm" do %>
+                <i class="bi bi-cart-check me-2"></i>Заказать услугу
+              <% end %>
+
+              <div class="form-text mt-3 text-muted">
+                <i class="bi bi-shield-check me-1"></i> Гарантия на все работы
+              </div>
+            </div>
+
           </div>
         </div>
-      <div class="col-12 col-lg-6">
-        <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded" style="background: white; min-height: 200px;">
-          <%= @service.explanation %>
-        </div>
+
       </div>
     </div>
-      <center>
-        <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded" style="background: white; width: 360px;">
-            <h3>Цена: &nbsp; &nbsp;<span class="badge text-bg-success"><%= @service.price %> &#8381;</span></h3>
-        </div>
-      </center>
-
-
   </div>
+
+  <style>
+    /* Плавное наведение для ссылки назад */
+    .hover-primary {
+      transition: color 0.2s ease;
+    }
+    .hover-primary:hover {
+      color: #0d6efd !important;
+    }
+
+    /* Скругление углов */
+    .rounded-4 {
+      border-radius: 1rem !important;
+    }
+
+    /* Эффект легкого всплытия для кнопки */
+    .hover-lift {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .hover-lift:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0.5rem 1rem rgba(25, 135, 84, 0.15) !important;
+    }
+
+    /* Исправление отступов в simple_format */
+    .lh-lg p:last-child {
+      margin-bottom: 0;
+    }
+  </style>
+
 </body>

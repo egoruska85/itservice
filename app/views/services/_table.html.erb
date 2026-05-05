@@ -1,25 +1,108 @@
+<div class="table-responsive">
+  <table class="table table-hover align-middle custom-services-table">
 
+    <%# Умный и аккуратный заголовок категории %>
+    <caption class="caption-top text-dark pb-3">
+      <div class="d-flex align-items-center justify-content-between">
+        <h3 class="fw-bold mb-0" style="font-family: 'BankGothic', sans-serif; font-size: 20px;">
+          <i class="bi bi-laptop text-primary me-2"></i>Компьютеры и ноутбуки
+        </h3>
+        <span class="badge bg-light text-secondary border">Всего услуг: <%= @services_1.count %></span>
+      </div>
+      <div class="bg-primary bg-opacity-10 mt-2" style="height: 1px; width: 100%;"></div>
+    </caption>
 
-    <table class="table">
-      <thead>
+    <%# Шапка таблицы %>
+    <thead class="table-light">
+      <tr>
+        <th scope="col" class="text-center py-3" style="width: 120px;">ID</th>
+        <th scope="col" class="py-3">Наименование работ</th>
+        <th scope="col" class="text-end py-3" style="width: 150px;">Стоимость</th>
+      </tr>
+    </thead>
+
+    <%# Тело таблицы %>
+    <tbody>
+      <% @services_1.each do |service| %>
         <tr>
-          <center><h3>Компьютеры и ноутбуки</h3></center>
-          <hr>
-          <th scope="col">Номер услуги</th>
-          <th scope="col">Наименование работ</th>
-          <th scope="col">Цена за работу</th>
+          <%# Номер услуги (ID) %>
+          <td class="text-center">
+            <span class="badge bg-light text-dark border px-2 py-1"><%= service.number %></span>
+          </td>
 
+          <%# Наименование %>
+          <td class="py-3">
+            <%= link_to service_path(service), class: "service-link text-decoration-none d-block fw-medium" do %>
+              <%= service.name %>
+            <% end %>
+          </td>
+
+          <%# Цена %>
+          <td class="text-end py-3">
+            <span class="price-tag fw-bold text-dark">
+              <%= number_with_delimiter(service.price, delimiter: " ") %> <span class="text-muted fw-normal">₽</span>
+            </span>
+          </td>
         </tr>
-      </thead>
-      <tbody>
-        <% @services_1.each do |service| %>
-        <tr>
-          <th scope="row"><%= service.number %></th>
-          <td><%= link_to "#{service.name}", service_path(service), class:"nav-link" %></td>
-          <td><%= service.price %> &#8381; </td>
+      <% end %>
+    </tbody>
 
-        </tr>
-        <% end %>
+  </table>
+</div>
 
-      </tbody>
-    </table>
+<style>
+  /* Стили для таблицы */
+  .custom-services-table {
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  /* Скругление шапки таблицы */
+  .custom-services-table thead th:first-child {
+    border-top-left-radius: 8px;
+  }
+  .custom-services-table thead th:last-child {
+    border-top-right-radius: 8px;
+  }
+
+  /* Кастомный цвет шапки */
+  .custom-services-table thead {
+    background-color: #f8f9fa !important;
+    border-bottom: 2px solid #e9ecef;
+  }
+
+  .custom-services-table thead th {
+    font-weight: 600;
+    color: #495057;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+  }
+
+  /* Стили для ссылок */
+  .service-link {
+    color: #212529;
+    transition: color 0.2s ease;
+  }
+  .service-link:hover {
+    color: #0d6efd;
+  }
+
+  /* Тень и фон для цены */
+  .price-tag {
+    font-size: 1.05rem;
+    display: inline-block;
+    padding: 2px 8px;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+  }
+
+  /* Плавный эффект при наведении на строку */
+  .custom-services-table tbody tr {
+    transition: background-color 0.2s ease;
+  }
+  .custom-services-table tbody tr:hover {
+    background-color: rgba(13, 110, 253, 0.02) !important;
+  }
+</style>

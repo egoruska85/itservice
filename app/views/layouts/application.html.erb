@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html class="h-100">
   <head>
-    <% if @organization.logo.present? %>
-    <%= favicon_link_tag rails_blob_url(@organization.logo) %>
+    <% if @organization&.logo&.attached? %>
+      <%= favicon_link_tag rails_blob_url(@organization.logo) %>
     <% end %>
-    <title><%= @organization.name %></title>
+    <title><%= @organization&.name || "Default Title" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-    <%= stylesheet_link_tag 'slide', media: 'all' %>
-    <%= javascript_include_tag 'slide', 'data-turbolinks-track': 'reload' %>
 
-
+    <%# Подключение кастомных стилей и скриптов slide %>
+    <%= stylesheet_link_tag 'slide', media: 'all', 'data-turbo-track': 'reload' %>
+    <%= javascript_include_tag 'slide', 'data-turbo-track': 'reload' %>
 
     <style>
       body {
@@ -26,15 +26,21 @@
     </style>
   </head>
 
-  <body>
+  <body class="d-flex flex-column h-100">
+    <%# Контент страницы обязательно должен быть внутри контейнера, если вы используете Bootstrap %>
+    <main class="container my-4">
+      <%= yield %>
+    </main>
 
-    <%= yield %>
-    <nav class="navbar bg-body-tertiary" style="background: linear-gradient(to left, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0)); height: 53px;">
+    <nav class="navbar bg-body-tertiary mt-auto" style="background: linear-gradient(to left, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0)); height: 53px;">
       <div class="container">
         <ul class="nav ms-auto">
-          <%= @organization.name %>&copy; <%= Time.now.year %> <%= t('footer.rights')%>
+          <li class="nav-item">
+            <%= @organization&.name %> &copy; <%= Time.current.year %> <%= t('footer.rights') %>
+          </li>
         </ul>
       </div>
     </nav>
+
   </body>
 </html>

@@ -1,49 +1,141 @@
 <%= render '/orders/navbar' %>
-<div class="container">
-  <center><h1 class="">Ваша заявка</h1></center>
 
-    <%= form_for :order, url: orders_path do |f| %>
-      <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded" style="background: white;">
-        <%= f.label "Ваша предполагаемая услуга" %>
-        <br><br>
-        <%= f.select :service_id, options_for_select(@services.collect{ |service| [service.name, service.id] }), {}, {class: "form-control"} %>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-xl-10">
+
+      <!-- Заголовок -->
+      <div class="text-center mb-5">
+        <h1 class="display-5 fw-bold text-dark mb-2">Оформление заявки</h1>
+        <p class="text-muted fs-5">Пожалуйста, заполните форму ниже, и мы свяжемся с вами в ближайшее время.</p>
       </div>
 
-        <div class="row">
-          <div class="col-sm-12 col-lg-6">
-            <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded" style="background: white;">
-              <%= f.label "Опишите вашу проблему" %>
-              <br><br>
-              <%= f.text_area :defect, class:"form-control", rows:"6" %>
+      <%= form_for :order, url: orders_path, html: { multipart: true, class: "needs-validation" } do |f| %>
+
+        <div class="row g-4">
+
+          <!-- Левая колонка: Описание проблемы -->
+          <div class="col-12 col-lg-7">
+            <div class="card border-0 shadow-sm h-100 rounded-4 p-4">
+              <div class="card-body p-2">
+                <div class="d-flex align-items-center mb-4">
+                  <div class="bg-primary bg-opacity-10 text-primary rounded-3 p-2 me-3">
+                    <i class="bi bi-tools fs-4"></i>
+                  </div>
+                  <h4 class="mb-0 fw-bold">Детали заявки</h4>
+                </div>
+
+                <!-- Выбор услуги -->
+                <div class="mb-4">
+                  <%= f.label :service_id, "Какая услуга вам требуется?", class: "form-label fw-semibold text-secondary" %>
+                  <% if @services.present? %>
+                    <%= f.select :service_id, options_for_select(@services.collect{ |service| [service.name, service.id] }), {}, { class: "form-select form-select-lg border-2 shadow-none" } %>
+                  <% else %>
+                    <div class="alert alert-warning d-flex align-items-center mt-2 mb-0" role="alert">
+                      <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                      <div>Услуги временно недоступны. Обратитесь к администратору.</div>
+                    </div>
+                  <% end %>
+                </div>
+
+                <!-- Текст проблемы -->
+                <div class="mb-0">
+                  <%= f.label :defect, "Суть проблемы или пожелания", class: "form-label fw-semibold text-secondary" %>
+                  <%= f.text_area :defect, class: "form-control border-2 shadow-none", rows: "7", placeholder: "Опишите вашу проблему как можно подробнее..." %>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="col-sm-12 col-lg-6">
-            <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded" style="background: white; height: 240px;">
-              <%= f.label "Укажите ваш телефон" %>
-              <br><br>
-              <%= f.text_field :phone, value: current_user.phone, class:"form-control" %>
-<hr>
-              <%= f.label "Укажите ваш адрес" %>
-              <br>
-              <%= f.text_area :address, value: current_user.address, class:"form-control" %>
+
+          <!-- Правая колонка: Контакты и файлы -->
+          <div class="col-12 col-lg-5">
+            <div class="d-flex flex-column gap-4 h-100">
+
+              <!-- Карточка контактов -->
+              <div class="card border-0 shadow-sm rounded-4 p-4">
+                <div class="card-body p-2">
+                  <div class="d-flex align-items-center mb-4">
+                    <div class="bg-success bg-opacity-10 text-success rounded-3 p-2 me-3">
+                      <i class="bi bi-person-lines-fill fs-4"></i>
+                    </div>
+                    <h4 class="mb-0 fw-bold">Контакты</h4>
+                  </div>
+
+                  <div class="mb-3">
+                    <%= f.label :phone, "Номер телефона", class: "form-label fw-semibold text-secondary" %>
+                    <div class="input-group">
+                      <span class="input-group-text border-2 bg-light"><i class="bi bi-telephone text-muted"></i></span>
+                      <%= f.text_field :phone, value: current_user&.phone, class: "form-control border-2 shadow-none", placeholder: "+7 (___) ___-__-__" %>
+                    </div>
+                  </div>
+
+                  <div class="mb-0">
+                    <%= f.label :address, "Адрес оказания услуги", class: "form-label fw-semibold text-secondary" %>
+                    <div class="input-group">
+                      <span class="input-group-text border-2 bg-light"><i class="bi bi-geo-alt text-muted"></i></span>
+                      <%= f.text_area :address, value: current_user&.address, class: "form-control border-2 shadow-none", rows: "2", placeholder: "Город, улица, дом, кв..." %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Карточка файлов -->
+              <div class="card border-0 shadow-sm rounded-4 p-4 flex-grow-1">
+                <div class="card-body p-2 d-flex flex-column justify-content-between">
+                  <div>
+                    <div class="d-flex align-items-center mb-4">
+                      <div class="bg-warning bg-opacity-10 text-warning rounded-3 p-2 me-3">
+                        <i class="bi bi-camera fs-4"></i>
+                      </div>
+                      <h4 class="mb-0 fw-bold">Медиа</h4>
+                    </div>
+
+                    <div class="mb-3">
+                      <%= f.label :images, "Прикрепите фото (если есть)", class: "form-label fw-semibold text-secondary" %>
+                      <%= f.file_field :images, multiple: true, class: "form-control border-2 shadow-none" %>
+                      <div class="form-text mt-2">Вы можете выбрать несколько файлов, чтобы наглядно показать проблему.</div>
+                    </div>
+                  </div>
+
+                  <!-- Кнопка отправки -->
+                  <div class="mt-auto pt-3">
+                    <%= f.submit 'Отправить заявку', class: "btn btn-primary btn-lg w-100 fw-bold py-3 rounded-3 shadow-sm hover-lift" %>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
+
         </div>
-        <center>
-          <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded" style="background: white; width: 350px;">
-            <%= f.label "Можете прикрепить картинки проблемы" %>
-            <br><br>
-            <%= f.file_field :images, multiple: true, class:'form-control' %>
-          </div>
-          <%= f.submit 'Отправить заявку', class:"btn btn-success" %>
 
-        </center>
+      <% end %>
 
-
-
-
-
-    <% end %>
-
+    </div>
+  </div>
 </div>
-<br><br><br>
+
+<style>
+  /* Небольшие кастомные улучшения для аккуратности */
+  .form-control:focus, .form-select:focus {
+    border-color: #0d6efd;
+    background-color: #fff;
+  }
+  .input-group-text {
+    border-right: none;
+  }
+  .input-group > .form-control {
+    border-left: none;
+  }
+  .rounded-4 {
+    border-radius: 1rem !important;
+  }
+  /* Плавное всплытие кнопки при наведении */
+  .hover-lift {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  }
+</style>

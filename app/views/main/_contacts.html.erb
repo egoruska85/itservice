@@ -1,96 +1,224 @@
-<div class="container" id="contacts" >
-  <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded border border-primary" style="background-color: rgba(255, 255, 255, 0.9);">
-    <center><h1 style="font-family: bankgothic;">Наши контакты</h1></center>
+<div class="container py-5" id="contacts">
 
-      <div class="row">
-        <div class="col-md-6">
-          <%= phone_to @about.phone, class:'btn btn-info', style:'max-height: 38px;' do %>
-            <p style="font-size: 20px;"><i class="bi bi-telephone-outbound-fill"></i><%= @about.phone %></p>
+  <!-- Общий заголовок секции -->
+  <div class="text-center mb-5">
+    <h1 class="display-5 fw-bold text-dark mb-2" style="font-family: 'BankGothic', sans-serif;">Наши контакты</h1>
+    <div class="d-inline-block bg-primary rounded-pill" style="width: 60px; height: 4px;"></div>
+  </div>
+
+  <div class="row g-4">
+
+    <!-- 1. Блок контактных данных -->
+    <div class="col-12 col-lg-5">
+      <div class="card border-0 shadow-sm rounded-4 h-100 p-4" style="background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px);">
+        <div class="card-body d-flex flex-column h-100 p-2">
+
+          <h3 class="fw-bold mb-4" style="font-family: 'BankGothic', sans-serif; font-size: 24px;">Как с нами связаться</h3>
+
+          <% if @about.present? %>
+            <div class="d-flex flex-column gap-3 flex-grow-1">
+
+              <%# Телефон %>
+              <% if @about.phone.present? %>
+                <%= phone_to @about.phone, class: 'contact-pill phone' do %>
+                  <div class="icon-wrap"><i class="bi bi-telephone-outbound-fill"></i></div>
+                  <div class="text-wrap">
+                    <span class="label">Позвонить нам</span>
+                    <span class="value"><%= @about.phone %></span>
+                  </div>
+                <% end %>
+              <% end %>
+
+              <%# WhatsApp %>
+              <% if @about.whatsapp.present? %>
+                <%= link_to "https://api.whatsapp.com/send/?phone=#{Regexp.last_match(1) if @about.whatsapp =~ /\+?(\d+)/}", class: "contact-pill whatsapp", target: "_blank" do %>
+                  <div class="icon-wrap"><i class="bi bi-whatsapp"></i></div>
+                  <div class="text-wrap">
+                    <span class="label">Написать в мессенджер</span>
+                    <span class="value">WhatsApp</span>
+                  </div>
+                <% end %>
+              <% end %>
+
+              <%# Telegram %>
+              <% if @about.telegram.present? %>
+                <%= link_to "https://telegram.me/#{@about.telegram.delete('@')}", class: "contact-pill telegram", target: "_blank" do %>
+                  <div class="icon-wrap"><i class="bi bi-telegram"></i></div>
+                  <div class="text-wrap">
+                    <span class="label">Написать в канал</span>
+                    <span class="value">Telegram</span>
+                  </div>
+                <% end %>
+              <% end %>
+
+              <%# Email %>
+              <% if @about.email.present? %>
+                <%= mail_to @about.email, class: "contact-pill email" do %>
+                  <div class="icon-wrap"><i class="bi bi-envelope-fill"></i></div>
+                  <div class="text-wrap">
+                    <span class="label">Написать на почту</span>
+                    <span class="value"><%= @about.email %></span>
+                  </div>
+                <% end %>
+              <% end %>
+
+            </div>
+
+            <%# Адрес %>
+            <% if @about.address.present? %>
+              <div class="mt-4 pt-3 border-top">
+                <div class="d-flex align-items-start">
+                  <div class="text-primary fs-4 me-3 mt-1">
+                    <i class="bi bi-geo-alt-fill"></i>
+                  </div>
+                  <div>
+                    <h6 class="fw-bold mb-1">Наш адрес:</h6>
+                    <div class="text-secondary"><%= simple_format @about.address %></div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+
+          <% else %>
+            <div class="alert alert-light border text-center my-auto">
+              Контакты еще не заполнены.
+            </div>
           <% end %>
-          <br><br>
-          <%= link_to "https://api.whatsapp.com/send/?phone=(#{@about.whatsapp})", class:"btn btn-success" do %>
-            <i class="bi bi-whatsapp">WhatsApp</i>
-          <% end %>
-          <br><br>
-          <%= link_to "https://telegram.me/#{@about.telegram}", class:"btn btn-primary" do %>
-            <i class="bi bi-telegram">Telegram</i>
-          <% end %>
-          <br><br>
-          <%= mail_to @about.email, class:"btn btn-primary" do %>
-            <i class="bi bi-mail">Эл. почта: <%= @about.email %></i>
-          <% end %>
-          <br><br>
-          <div class="row">
-            <div class="col-3">
-              <h6>Наш адрес: </h6>
-            </div>
-            <div class="col-9">
-              <h6>
-                <%= simple_format @about.address %>
-              </h6>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <%= form_for @contact do |f| %>
-          <!--</div>-->
-          <!--<form method="POST" id="contactForm" name="contactForm" class="contactForm">-->
-          <div class="row">
-            <center><h1 style="font-family: bankgothic; font-size: 20px;">Обратный связь</h1></center>
-            <div class="col-md-6">
-              <div class="form-group">
-                <!--<label class="label" for="name">Full Name</label>
-                <input type="text" class="form-control" name="name" id="name" placeholder="Name">-->
-                <%= f.label t('contact.name') %>
-                <%= f.text_field :name, class:'form-control', placeholder: t('contact.name')%>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <!--<label class="label" for="email">Email Address</label>
-                <input type="email" class="form-control" name="email" id="email" placeholder="Email">-->
-                <%= f.label t('contact.mail') %>
-                <%= f.text_field :email, class:'form-control', placeholder: t('contact.mail')%>
-              </div>
-            </div>
-            <div class="col-md-12">
-              <div class="form-group">
-                <!--<label class="label" for="subject">Subject</label>
-                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject">-->
-                <%= f.label t('contact.sales_phone') %>
-                <%= f.text_field :phone, class:'form-control', placeholder: t('contact.sales_phone'), value:'+'%>
-              </div>
-            </div>
-            <div class="col-md-12">
-              <div class="form-group">
-                <!--<label class="label" for="#">Message</label>
-                <textarea name="message" class="form-control" id="message" cols="30" rows="4" placeholder="Message"></textarea>-->
-                <%= f.label t('contact.message') %>
-                <%= f.text_area :message, class:'form-control', placeholder: t('contact.message'), rows:"6" %>
-              </div>
-            </div>
-            <div class="col-md-12">
-              <div class="form-group">
-                <!--<label class="label" for="#">Message</label>
-                <textarea name="message" class="form-control" id="message" cols="30" rows="4" placeholder="Message"></textarea>-->
-                <%= f.file_field :file, class:'form-control', type:'file', id:'formFileMultiple', multiple: true %>
-              </div>
-            </div>
-           <br><br>
-            <div class="col-md-12">
-              <div class="form-group">
-                <%= f.submit 'Отправить', class:'btn btn-primary'%>
-                <br><br>
-                <!--<input type="submit" value="Send Message" class="btn btn-primary">-->
-                <div class="submitting"></div>
-              </div>
-            </div>
-          </div>
-          <!--</form>-->
-          </div>
-          <% end %>
+
         </div>
       </div>
+    </div>
+
+    <!-- 2. Блок формы обратной связи -->
+    <div class="col-12 col-lg-7">
+      <div class="card border-0 shadow-sm rounded-4 h-100 p-4" style="background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px);">
+        <div class="card-body p-2">
+
+          <h3 class="fw-bold mb-4" style="font-family: 'BankGothic', sans-serif; font-size: 24px;">Напишите нам</h3>
+
+          <% if @contact.present? %>
+            <%= form_for @contact, html: { multipart: true } do |f| %>
+              <div class="row g-3">
+
+                <%# Имя %>
+                <div class="col-md-6">
+                  <div class="form-floating">
+                    <%= f.text_field :name, class: 'form-control border-2 shadow-none', placeholder: t('contact.name') %>
+                    <%= f.label :name, t('contact.name') %>
+                  </div>
+                </div>
+
+                <%# Email %>
+                <div class="col-md-6">
+                  <div class="form-floating">
+                    <%= f.text_field :email, class: 'form-control border-2 shadow-none', placeholder: t('contact.mail') %>
+                    <%= f.label :email, t('contact.mail') %>
+                  </div>
+                </div>
+
+                <%# Телефон %>
+                <div class="col-md-12">
+                  <div class="form-floating">
+                    <%= f.text_field :phone, class: 'form-control border-2 shadow-none', placeholder: t('contact.sales_phone'), value: '+' %>
+                    <%= f.label :phone, t('contact.sales_phone') %>
+                  </div>
+                </div>
+
+                <%# Сообщение %>
+                <div class="col-md-12">
+                  <div class="form-floating">
+                    <%= f.text_area :message, class: 'form-control border-2 shadow-none', placeholder: t('contact.message'), style: 'height: 120px' %>
+                    <%= f.label :message, t('contact.message') %>
+                  </div>
+                </div>
+
+                <%# Файлы %>
+                <div class="col-md-12">
+                  <label class="form-label fw-semibold text-secondary mb-1">Прикрепить файлы</label>
+                  <%= f.file_field :file, class: 'form-control border-2 shadow-none', multiple: true %>
+                </div>
+
+                <%# Кнопка отправки %>
+                <div class="col-md-12 mt-4">
+                  <%= f.submit 'Отправить сообщение', class: 'btn btn-primary btn-lg w-100 fw-bold py-3 hover-lift' %>
+                </div>
+
+              </div>
+            <% end %>
+          <% else %>
+            <div class="alert alert-light border text-center my-auto">
+              Форма временно недоступна.
+            </div>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
 
   </div>
 </div>
+
+<style>
+  /* Общие стили */
+  .rounded-4 { border-radius: 1rem !important; }
+
+  /* Кастомные кнопки-плитки для контактов */
+  .contact-pill {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  .contact-pill .icon-wrap {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    margin-right: 15px;
+    flex-shrink: 0;
+  }
+  .contact-pill .text-wrap {
+    display: flex;
+    flex-direction: column;
+  }
+  .contact-pill .label { font-size: 0.75rem; color: #6c757d; }
+  .contact-pill .value { font-size: 1rem; font-weight: 600; }
+
+  /* Цветовые схемы для плиток */
+  .contact-pill.phone { background: #f0f9ff; color: #0369a1; }
+  .contact-pill.phone .icon-wrap { background: #0369a1; color: #fff; }
+
+  .contact-pill.whatsapp { background: #f0fdf4; color: #15803d; }
+  .contact-pill.whatsapp .icon-wrap { background: #15803d; color: #fff; }
+
+  .contact-pill.telegram { background: #f0f7ff; color: #1d4ed8; }
+  .contact-pill.telegram .icon-wrap { background: #1d4ed8; color: #fff; }
+
+  .contact-pill.email { background: #fef2f2; color: #b91c1c; }
+  .contact-pill.email .icon-wrap { background: #b91c1c; color: #fff; }
+
+  /* Эффекты наведения */
+  .contact-pill:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+  .hover-lift {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(13, 110, 253, 0.2);
+  }
+
+  /* Улучшение для полей ввода на фокусе */
+  .form-control:focus {
+    border-color: #0d6efd;
+    background-color: #fff;
+  }
+</style>

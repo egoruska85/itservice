@@ -1,13 +1,75 @@
 <%= render '/services/navbar' %>
-<center><h1>Услуги и цены</h1></center>
-<div class="container">
-  <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded" style="background: white;" id="p1" >
-    <%= render '/services/table' %>
+
+<div class="container py-5">
+
+  <!-- Заголовок страницы -->
+  <div class="text-center mb-5">
+    <h1 class="display-5 fw-bold text-dark mb-2" style="font-family: 'BankGothic', sans-serif;">Услуги и цены</h1>
+    <p class="text-muted fs-5">Прозрачные цены и качественное выполнение работ</p>
+    <div class="d-inline-block bg-primary rounded-pill mt-2" style="width: 60px; height: 4px;"></div>
   </div>
-  <hr>
-  <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded" style="background: white;" id="p2" >
-    <%= render '/services/table2' %>
-    
+
+  <div class="row g-4 justify-content-center">
+    <div class="col-12 col-xl-10">
+
+      <!-- Блок 1 (Основная таблица услуг) -->
+      <div id="p1" class="card border-0 shadow-sm rounded-4 mb-5" style="background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px);">
+        <div class="card-body p-4 p-md-5">
+          <div class="d-flex align-items-center mb-4">
+
+
+          </div>
+
+          <%= render '/services/table' %>
+        </div>
+      </div>
+
+      <!-- Декоративный разделитель -->
+      <div class="d-flex justify-content-center my-4">
+        <div class="text-muted opacity-25">
+          <i class="bi bi-dot fs-3"></i>
+          <i class="bi bi-dot fs-3"></i>
+          <i class="bi bi-dot fs-3"></i>
+        </div>
+      </div>
+
+      <!-- Блок 2 (Дополнительная таблица услуг) -->
+      <div id="p2" class="card border-0 shadow-sm rounded-4" style="background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px);">
+        <div class="card-body p-4 p-md-5">
+          <div class="d-flex align-items-center mb-4">
+
+
+          </div>
+
+          <%= render '/services/table2' %>
+        </div>
+      </div>
+
+    </div>
   </div>
 
 </div>
+
+<style>
+  /* Сглаживание углов для карточек */
+  .rounded-4 {
+    border-radius: 1rem !important;
+  }
+
+  /* Улучшение внешнего вида вложенных таблиц (если они используют стандартный класс table) */
+  #p1 table, #p2 table {
+    margin-bottom: 0;
+  }
+
+  #p1 table th, #p2 table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #495057;
+    border-top: none;
+  }
+
+  #p1 table tr:hover, #p2 table tr:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+    transition: background-color 0.2s ease;
+  }
+</style>

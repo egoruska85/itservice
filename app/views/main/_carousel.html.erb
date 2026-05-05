@@ -1,42 +1,94 @@
-<div class="container-fluid">
-  <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded" style="background: rgba(28, 36, 237, 0.5);">
-    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-          <% @carouseles.each do |i| %>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= @a + i.id %>" aria-label="Slide <%= @a + i.id + 1 %>"></button>
-        <% end %>
-      </div>
-      <div class="carousel-inner container-fluid d-md-block">
-        <div class="carousel-item active">
-          <%= link_to @carousel_active.link do %>
-          <%= image_tag(@carousel_active.image, class:"d-block w-100", alt:"...") %>
-          <% end %>
-          <div class="carousel-caption d-none d-md-block">
-            <h1><%= @carousel_active.title %></h1>
-            <p><%= @carousel_active.text %></p>
+<%# Изменили container-fluid на container и ограничили ширину (col-xl-10) %>
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-12 col-xl-10">
+
+      <% if @carouseles.any? %>
+        <%# Обертка карусели с парящей тенью и аккуратным скруглением %>
+        <div class="carousel-wrapper shadow-strong rounded-4 overflow-hidden">
+          <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel">
+
+            <!-- Индикаторы слайдов -->
+            <div class="carousel-indicators custom-indicators">
+              <% @carouseles.each_with_index do |_, index| %>
+                <button type="button"
+                        data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide-to="<%= index %>"
+                        class="<%= 'active' if index == 0 %>"
+                        aria-current="<%= 'true' if index == 0 %>"
+                        aria-label="Slide <%= index + 1 %>"></button>
+              <% end %>
+            </div>
+
+            <!-- Контент слайдов -->
+            <div class="carousel-inner">
+              <% @carouseles.each_with_index do |carousel, index| %>
+
+                <%# Весь слайд является ссылкой %>
+                <%= link_to (carousel.link.presence || root_path), class: "carousel-item d-block carousel-link #{'active' if index == 0}" do %>
+
+                  <%# Картинка %>
+                  <% if carousel.image.attached? %>
+                    <%= image_tag(carousel.image, class: "d-block w-100 carousel-img", alt: carousel.title) %>
+                  <% else %>
+                    <div class="d-flex w-100 bg-gradient-dark text-white justify-content-center align-items-center carousel-img">
+                      <div class="text-center opacity-75">
+                        <i class="bi bi-image fs-1 d-block mb-2"></i>
+                        <span class="small text-uppercase fw-bold letter-spacing">Нет изображения</span>
+                      </div>
+                    </div>
+                  <% end %>
+
+                  <%# Градиентная маска для читаемости %>
+                  <div class="carousel-overlay"></div>
+
+                  <%# Текстовое описание %>
+                  <div class="carousel-caption custom-caption">
+                    <div class="caption-content">
+                      <h1 class="fw-bold mb-3 text-white animated-text" style="font-family: 'BankGothic', sans-serif;">
+                        <%= carousel.title %>
+                      </h1>
+                      <p class="fs-5 mb-0 text-white-50 animated-text-delay">
+                        <%= carousel.text %>
+                      </p>
+
+                      <%# Маленькая стрелка-подсказка %>
+                      <div class="mt-3 text-primary-emphasis fs-6 fw-bold text-uppercase letter-spacing animated-text-delay">
+                        Подробнее <i class="bi bi-arrow-right ms-1"></i>
+                      </div>
+                    </div>
+                  </div>
+
+                <% end %>
+
+              <% end %>
+            </div>
+
+            <!-- Стрелки навигации -->
+            <button class="carousel-control-prev custom-control" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+              <span class="control-circle"><i class="bi bi-arrow-left-short fs-3"></i></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next custom-control" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+              <span class="control-circle"><i class="bi bi-arrow-right-short fs-3"></i></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+
           </div>
         </div>
-        <% @carouseles.each do |carousel| %>
-        <div class="carousel-item">
-          <%= link_to carousel.link do %>
-            <%= image_tag(carousel.image, class:"d-block w-100", alt:"...") %>
-          <% end %>
-            <div class="carousel-caption d-none d-md-block">
-              <h1><%= carousel.title %></h1>
-              <p><%= carousel.text %></p>
+      <% else %>
+        <%# Заглушка %>
+        <div class="card border-0 shadow-sm rounded-4 mt-3">
+          <div class="card-body p-5 text-center">
+            <div class="bg-light d-inline-flex p-3 rounded-circle mb-3">
+              <i class="bi bi-images fs-2 text-muted"></i>
             </div>
+            <h4 class="text-dark fw-bold mb-2">Добро пожаловать!</h4>
+            <p class="text-secondary mb-0">Добавьте слайды для карусели в панели администратора.</p>
+          </div>
         </div>
-        <% end %>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
+      <% end %>
+
     </div>
   </div>
 </div>

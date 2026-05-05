@@ -2,8 +2,16 @@ RailsAdmin.config do |config|
   config.asset_source = :sprockets
 
   config.authorize_with do
-    redirect_to main_app.root_path unless warden.user.admin == true
-  end  
+    # 1. Сначала требуем, чтобы пользователь вошел в систему
+
+    # 2. Если в базе всего 1 пользователь — пускаем его
+    is_only_user = (User.count == 1)
+
+    # 3. Если он не единственный и при этом не админ — выкидываем
+    unless is_only_user || warden.user.admin?
+      redirect_to main_app.root_path, alert: "Доступ запрещен!"
+    end
+  end
 
   ### Popular gems integration
 

@@ -18,9 +18,9 @@ class ApplicationController < ActionController::Base
     @organization = Organization.first
     @a = -1
     @time = Time.now
-    @carouseles = Carousel.where(id: 2..100)
+    @carouseles = Carousel.all
   #@carouseles = Carousel.all
-    @carousel_active = Carousel.first
+
   end
 
   protected
