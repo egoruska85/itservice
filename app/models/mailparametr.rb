@@ -1,0 +1,2 @@
+class Mailparametr < ApplicationRecord
+end
