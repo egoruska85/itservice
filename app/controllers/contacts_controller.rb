@@ -2,6 +2,7 @@ class ContactsController < ApplicationController
   def create
     @contact = Contact.new(params[:contact])
     @contact.sender = 'egoruska85@mail.ru'
+    @contact.subject = "Новое сообщение с сайта INTEK"
     @contact.request = request
 
     if @contact.deliver
