@@ -6,13 +6,9 @@ class ContactsController < ApplicationController
     @contact.request = request
 
     if @contact.deliver
-      flash.now[:error] = nil
-      redirect_to request.referrer, info: "Отправлено"
+      redirect_to root_path, notice: "Сообшение отправлено"
     else
-      flash.now[:error] != nil
-
-
-      redirect_to request.referrer, info: "Не отправлено"
+      redirect_to root_path, alert: "Сообщение не отправлено"
     end
   end
 end
