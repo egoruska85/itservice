@@ -6,5 +6,74 @@
   </head>
   <body>
     <%= render 'include/navbar' %>
+    <div class="container mt-3" style="max-width: 800px;">
+      <div class="card shadow-sm">
+        <div class="card-header bg-light py-2">
+          <h6 class="card-title mb-0 text-secondary fw-bold" style="font-size: 0.9rem;">
+            <i class="bi bi-people me-1"></i> Список организаций и их реквизиты
+          </h6>
+        </div>
+
+        <div class="list-group list-group-flush">
+          <% @organizations.each do |user| %>
+            <div class="list-group-item p-3 bg-white">
+
+              <!-- Информация о пользователе-организации -->
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="fw-bold text-primary" style="font-size: 0.9rem;">
+                  <i class="bi bi-person-badge me-1"></i> <%= user.username || "Пользователь ##{user.id}" %>
+                </span>
+                <span class="badge bg-secondary-subtle text-secondary border fw-normal" style="font-size: 0.75rem;">
+                  Реквизитов: <%= user.companydetails.size %>
+                </span>
+              </div>
+
+              <!-- Вложенный список реквизитов этого пользователя -->
+              <% if user.companydetails.any? %>
+                <div class="row g-2 ps-3 border-start border-2 border-light">
+                  <% user.companydetails.each do |detail| %>
+                    <div class="col-12 bg-light p-2 rounded mb-1" style="font-size: 0.8rem;">
+                      <div class="fw-semibold text-dark mb-1"><%= detail.name_organization %></div>
+                      <div class="text-muted">
+                        <span class="me-3"><strong>ИНН:</strong> <%= detail.inn %></span>
+                        <span class="me-3"><strong>КПП:</strong> <%= detail.kpp.presence || '—' %></span>
+                        <span class="me-3"><strong>БИК:</strong> <%= detail.bik %></span>
+                      </div>
+                      <div class="text-muted mt-1">
+                        <span class="me-3"><strong>Р/С:</strong> <%= detail.current_account %></span>
+                        <% if detail.correspondent_account_number.present? %>
+                          <span><strong>К/С:</strong> <%= detail.correspondent_account_number %></span>
+                        <% end %>
+
+                      </div>
+                      <div class="mt-1"><strong>Наименование банка:</strong> <%= detail.recipient_bank_name %></div>
+                      <div class="mt-1">
+                        <strong>Дополнительно: </strong>
+                        <% if detail.additionally.empty? %>
+                          <b>Пусто</b>
+                        <% else %>
+                          <%= simple_format detail.additionally %>
+                        <% end %>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              <% else %>
+                <!-- Если реквизиты не заполнены -->
+                <div class="ps-3 text-muted italic" style="font-size: 0.8rem;">
+                  <i class="bi bi-exclamation-circle me-1"></i> Реквизиты еще не добавлены
+                </div>
+              <% end %>
+
+            </div>
+          <% end %>
+        </div>
+
+      </div>
+      <div class="d-flex justify-content-center mt-3 kaminari-bootstrap-sm">
+        <%= paginate @organizations, window: 1 %>
+      </div>
+    </div>
+
   </body>
 </html>

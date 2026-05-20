@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  name_organization: MyString
+  inn: MyString
+  kpp: MyString
+  current_account: MyString
+  recipient_bank_name: MyString
+  bik: MyString
+  correspondent_account_number: MyString
+  additionally: MyText
+
+two:
+  user: two
+  name_organization: MyString
+  inn: MyString
+  kpp: MyString
+  current_account: MyString
+  recipient_bank_name: MyString
+  bik: MyString
+  correspondent_account_number: MyString
+  additionally: MyText

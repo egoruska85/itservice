@@ -336,6 +336,7 @@ DEPENDENCIES
   devise-i18n
   importmap-rails
   jbuilder
+  kaminari
   mail_form
   nio4r (>= 2.5.9)
   pg

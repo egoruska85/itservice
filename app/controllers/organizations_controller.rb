@@ -2,7 +2,24 @@ class OrganizationsController < ApplicationController
   before_action :authenticate_user!, :check_organization_access
 
   def index
+    @companydetails = Companydetail.where(user_id: current_user.id)
 
+    # Инициализируем пустой объект для формы добавления новых реквизитов
+    @companydetail = current_user.companydetails.build
+  end
+
+  def create_company_details
+    @companydetail = Companydetail.new(company_detail_params)
+    @companydetail.user_id = current_user.id
+    if @companydetail.save
+       redirect_to organizations_path, notice: "Реквизиты созданы"
+    end
+  end
+
+  private
+
+  def company_detail_params
+    params.require(:companydetail).permit(:name_organization, :inn, :kpp, :current_account, :recipient_bank_name, :bik, :correspondent_account_number, :additionally, :user_id)
   end
 
   protected
@@ -26,7 +43,7 @@ class OrganizationsController < ApplicationController
       else
         remaining = 5 - session[:failed_organization_attempts]
         # Отправляем нарушителя на страницу частных клиентов
-        redirect_to privates_path, alert: "Вам нельзя на страницу организаций. Осталось попыток: #{remaining}." and return
+        redirect_to privates_path, alert: "Вам нельзя на страницу организаций." and return
       end
     end
 

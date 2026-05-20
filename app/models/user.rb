@@ -39,4 +39,6 @@ class User < ApplicationRecord
         errors.add(:base, "Администраторы не могу быть частным клиентом")
       end
    end
+
+   has_many :companydetails
 end
