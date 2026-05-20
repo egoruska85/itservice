@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
   def check_signed_user
     if user_signed_in?
       after_sign_in_path_for(current_user)
-      check_block_user
+      #check_block_user
     end
   end
 
@@ -68,9 +68,9 @@ class ApplicationController < ActionController::Base
   end
 
   def configure_permitted_parameters
-    added_attrs = [:username, :email, :password, :password_confirmation, :remember_me]
-    devise_parameter_sanitizer.permit :sign_up, keys: added_attrs
-    devise_parameter_sanitizer.permit :sign_in, keys: [:login, :password]
+    added_attrs = [:username, :phone, :email, :password, :password_confirmation, :remember_me]
+    devise_parameter_sanitizer.permit(:sign_in, keys: [:login])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :email, :phone, :password])
     devise_parameter_sanitizer.permit :account_update, keys: added_attrs
   end
 end

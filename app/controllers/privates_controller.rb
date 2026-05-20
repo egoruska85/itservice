@@ -10,7 +10,7 @@ class PrivatesController < ApplicationController
   def check_private_access
     if current_user.block?
       sign_out current_user
-      redirect_to new_user_session_path, alert: "Ваш аккаунт заблокирован." and return
+      redirect_to new_user_session_path, alert: "Ваш аккаунт заблокирован!." and return
     end
 
     # Сюда пускаем ТОЛЬКО приватных. Если юзер НЕ приватный — это нарушение

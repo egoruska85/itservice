@@ -21,7 +21,9 @@
               <!-- Информация о пользователе-организации -->
               <div class="d-flex justify-content-between align-items-center mb-2">
                 <span class="fw-bold text-primary" style="font-size: 0.9rem;">
-                  <i class="bi bi-person-badge me-1"></i> <%= user.username || "Пользователь ##{user.id}" %>
+                  <%= link_to organization_backoffice_path(user), class:"btn btn-success btn-sm" do %>
+                    <i class="bi bi-person-badge me-1"></i> <%= user.username || "Пользователь ##{user.id}" %>
+                  <% end  %>
                 </span>
                 <span class="badge bg-secondary-subtle text-secondary border fw-normal" style="font-size: 0.75rem;">
                   Реквизитов: <%= user.companydetails.size %>
