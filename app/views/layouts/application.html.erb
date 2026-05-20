@@ -28,22 +28,35 @@
 
   <body class="d-flex flex-column h-100">
     <%# Контент страницы обязательно должен быть внутри контейнера, если вы используете Bootstrap %>
-    <div id="flash-notifications" class="flash-container">
-  <% flash.each do |type, message| %>
-    <% alert_class = type == 'notice' ? 'success' : 'danger' %>
-    <% icon_class = type == 'notice' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill' %>
+    <div class="position-fixed top-0 end-0 p-3" style="max-width: 400px; width: 100%; z-index: 9999;">
+      <% flash.each do |type, message| %>
+        <% alert_class = type == 'notice' ? 'success' : 'danger' %>
+        <% icon_class = type == 'notice' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill' %>
 
-    <div class="alert alert-<%= alert_class %> alert-dismissible fade show shadow shadow-lg mb-3 custom-alert" role="alert">
-      <div class="d-flex align-items-center">
-        <i class="bi <%= icon_class %> me-2"></i>
-        <div><%= message %></div>
-      </div>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <div class="alert alert-<%= alert_class %> alert-dismissible fade show shadow-lg mb-2 custom-alert opacity-90" role="alert">
+          <div class="d-flex align-items-center">
+            <i class="bi <%= icon_class %> me-2 fs-5"></i>
+            <div class="text-break"><%= message %></div>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-</div>
+
     <main class="container my-4">
       <%= yield %>
+      <script>
+        document.addEventListener("turbo:load", function() {
+          setTimeout(function() {
+            let alerts = document.querySelectorAll('.custom-alert');
+            alerts.forEach(function(alert) {
+              // Плавное скрытие через встроенный метод Bootstrap
+              let bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+              if (bsAlert) bsAlert.close();
+            });
+          }, 15000); 
+        });
+      </script>
     </main>
 
     <nav class="navbar bg-body-tertiary mt-auto" style="background: linear-gradient(to left, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0)); height: 53px;">

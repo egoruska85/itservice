@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  before_action :set_locale, :set_variable, :set_mailer_settings
+  before_action :set_locale, :set_variable, :set_mailer_settings, :check_signed_user
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   private
@@ -24,6 +24,33 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
+  def check_signed_user
+    if user_signed_in?
+      after_sign_in_path_for(current_user)
+      check_block_user
+    end
+  end
+
+  def check_block_user
+    if current_user.block?
+      sign_out current_user
+      redirect_to root_path, alert: "Вход запрещён вы заблокированы системой."
+    end
+  end
+
+
+  def after_sign_in_path_for(resource)
+    if resource.private?
+      privates_path        # На страницу частного клиента
+    elsif resource.organization?
+      organizations_path   # На страницу организации
+    elsif resource.admin?
+      backoffices_path
+    else
+      root_path            # Если галочки не стоят — на главную страницу
+    end
+  end
 
   def set_mailer_settings
     @mail_params = Mailparametr.first
