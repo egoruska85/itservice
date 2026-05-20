@@ -9,4 +9,8 @@ Rails.application.routes.draw do
   resources :contacts
   # Defines the root path route ("/")
   # root "articles#index"
+
+  resources :organizations
+  resources :privates
+  resources :backoffices
 end
