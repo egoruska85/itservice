@@ -2,7 +2,7 @@ class BackofficesController < ApplicationController
   before_action :authenticate_user!, :check_admin_access
 
   def index
-
+    @organizations = User.where(organization: true).includes(:companydetails).page(params[:page]).per(2)
   end
 
   protected

@@ -6,5 +6,73 @@
   </head>
   <body>
     <%= render 'include/navbar' %>
+    <div class="container mt-3" style="max-width: 750px;">
+
+      <%# УСЛОВИЕ: Если у пользователя ЕЩЕ НЕТ реквизитов %>
+      <% if @companydetails.empty? %>
+
+        <div class="alert alert-info py-2 small mb-3">
+          <i class="bi bi-info-circle me-1"></i> У вас еще не добавлены реквизиты. Пожалуйста, заполните форму ниже.
+        </div>
+
+        <%# Рендерим форму (вынесена в блок ниже) %>
+        <%= render 'form_details' %>
+
+      <%# УСЛОВИЕ: Если у пользователя УЖЕ ЕСТЬ реквизиты %>
+      <% else %>
+
+        <div class="card shadow-sm mb-3">
+          <div class="card-header bg-light py-2 d-flex justify-content-between align-items-center">
+            <h6 class="card-title mb-0 text-secondary fw-bold" style="font-size: 0.9rem;">
+              <i class="bi bi-list-ul me-1"></i> Ваши сохраненные реквизиты
+            </h6>
+            <!-- Кнопка для раскрытия формы добавления прямо на этой же странице -->
+            <button class="btn btn-outline-primary btn-sm fw-semibold" style="font-size: 0.75rem;" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm">
+              + Добавить еще одну
+            </button>
+          </div>
+
+          <div class="list-group list-group-flush">
+            <% @companydetails.each do |detail| %>
+              <%# Пропускаем объект в памяти, если форма вернулась с ошибкой валидации %>
+              <% next if detail.new_record? %>
+
+              <div class="list-group-item p-3 d-flex justify-content-between align-items-start bg-white">
+                <div class="small text-muted" style="font-size: 0.85rem;">
+                  <strong class="text-dark d-block mb-1"><%= detail.name_organization %></strong>
+                  <span class="me-3"><strong>ИНН:</strong> <%= detail.inn %></span>
+                  <span class="me-3"><strong>КПП:</strong> <%= detail.kpp.presence || '—' %></span>
+                  <span class="me-3"><strong>БИК:</strong> <%= detail.bik %></span>
+                  <div class="mt-1"><strong>Р/С:</strong> <%= detail.current_account %></div>
+                  <div class="mt-1"><strong>Корр/С:</strong> <%= detail.correspondent_account_number %></div>
+                  <div class="mt-1"><strong>Наименование банка:</strong> <%= detail.recipient_bank_name %></div>
+                  <div class="mt-1">
+                    <strong>Дополнительно: </strong>
+                    <% if detail.additionally.empty? %>
+                      <b>Пусто</b>
+                    <% else %>
+                      <%= simple_format detail.additionally %>
+                    <% end %>
+                  </div>
+                </div>
+
+                <%# Кнопка удаления конкретной организации %>
+                <%= link_to company_detail_path(detail),
+                            data: { turbo_method: :delete, turbo_confirm: "Вы уверены, что хотите удалить эти реквизиты?" },
+                            class: "btn btn-outline-danger btn-sm p-1 border-0" do %>
+                  <i class="bi bi-trash" style="font-size: 0.9rem;"></i> Удалить
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <%# Скрытая по умолчанию форма добавления новых реквизитов (разворачивается по кнопке) %>
+        <div class="text-center text-muted small mt-1" style="font-size: 0.75rem;">
+          <%= page_entries_info @organizations %>
+        </div>
+
+      <% end %>
+    </div>
   </body>
 </html>

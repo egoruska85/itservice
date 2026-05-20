@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_05_20_093315) do
+ActiveRecord::Schema[7.0].define(version: 2026_05_20_133014) do
   create_table "abouts", force: :cascade do |t|
     t.string "title"
     t.text "body"
@@ -57,6 +57,21 @@ ActiveRecord::Schema[7.0].define(version: 2026_05_20_093315) do
     t.string "link"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "companydetails", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "name_organization"
+    t.string "inn"
+    t.string "kpp"
+    t.string "current_account"
+    t.string "recipient_bank_name"
+    t.string "bik"
+    t.string "correspondent_account_number"
+    t.text "additionally"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_companydetails_on_user_id"
   end
 
   create_table "mailparametrs", force: :cascade do |t|
@@ -127,6 +142,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_05_20_093315) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "companydetails", "users"
   add_foreign_key "orders", "services"
   add_foreign_key "orders", "users"
 end
