@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     end
   end
   resources :privates
-  resources :backoffices
+  resources :backoffices do
+    member {get :organization}
+  end
   resources :company_details, only: [:destroy]
 end

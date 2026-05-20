@@ -8,6 +8,10 @@
         <%= f.label 'Имя пользователя'%><br />
         <%= f.text_field :username, autofocus: true, class: 'form-control' %>
       </div>
+      <div class="field text-white">
+        <%= f.label 'Номер телефона'%><br />
+        <%= f.text_field :phone, autofocus: true, class: 'form-control' %>
+      </div>
       <div class="form-group text-white">
         <%= f.label :email %>
         <%= f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-control' %>

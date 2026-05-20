@@ -8,6 +8,14 @@ class OrganizationsController < ApplicationController
     @companydetail = current_user.companydetails.build
   end
 
+  def show
+    @user = User.find(params[:id])
+
+    if @user != current_user
+      redirect_to organization_path(current_user), alert: "Доступ запрещен"
+    end
+  end
+
   def create_company_details
     @companydetail = Companydetail.new(company_detail_params)
     @companydetail.user_id = current_user.id
