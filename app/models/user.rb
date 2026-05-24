@@ -43,4 +43,5 @@ class User < ApplicationRecord
    end
 
    has_many :companydetails
+   has_many :messages
 end
