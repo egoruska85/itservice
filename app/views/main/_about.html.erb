@@ -47,4 +47,15 @@
   .about-content p:last-child {
     margin-bottom: 0;
   }
+
+  /* Адаптивность шрифтов для мобильных устройств (экраны менее 768px) */
+  @media (max-width: 767.98px) {
+    .display-6 {
+      font-size: 1.5rem !important; /* Уменьшаем заголовок "О нас" */
+    }
+    .about-content {
+      font-size: 1rem !important;    /* Уменьшаем основной текст (эквивалент fs-6 вместо fs-5) */
+      line-height: 1.5 !important;  /* Немного уменьшаем межстрочный интервал для мобильных */
+    }
+  }
 </style>
