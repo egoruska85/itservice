@@ -15,7 +15,7 @@
           <i class="bi bi-info-circle me-1"></i> У вас еще не добавлены реквизиты. Пожалуйста, заполните форму ниже.
         </div>
 
-        <%# Рендерим форму (вынесена в блок ниже) %>
+        <%# Рендерим форму %>
         <%= render 'form_details' %>
 
       <%# УСЛОВИЕ: Если у пользователя УЖЕ ЕСТЬ реквизиты %>
@@ -26,7 +26,7 @@
             <h6 class="card-title mb-0 text-secondary fw-bold" style="font-size: 0.9rem;">
               <i class="bi bi-list-ul me-1"></i> Ваши сохраненные реквизиты
             </h6>
-            <!-- Кнопка для раскрытия формы добавления прямо на этой же странице -->
+            <!-- Кнопка для раскрытия формы добавления -->
             <button class="btn btn-outline-primary btn-sm fw-semibold" style="font-size: 0.75rem;" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm">
               + Добавить еще одну
             </button>
@@ -48,7 +48,7 @@
                   <div class="mt-1"><strong>Наименование банка:</strong> <%= detail.recipient_bank_name %></div>
                   <div class="mt-1">
                     <strong>Дополнительно: </strong>
-                    <% if detail.additionally.empty? %>
+                    <% if detail.additionally.blank? %>
                       <b>Пусто</b>
                     <% else %>
                       <%= simple_format detail.additionally %>
@@ -67,10 +67,17 @@
           </div>
         </div>
 
-        <%# Скрытая по умолчанию форма добавления новых реквизитов (разворачивается по кнопке) %>
-        <div class="text-center text-muted small mt-1" style="font-size: 0.75rem;">
-          <%= page_entries_info @organizations %>
+        <!-- КРИТИЧЕСКИ ВАЖНО: Скрытый контейнер с формой, который открывается по кнопке -->
+        <div class="collapse <%= 'show' if @companydetail&.errors&.any? %> mb-3" id="collapseForm">
+          <%= render 'form_details' %>
         </div>
+
+        <!-- Безопасный вывод пагинации, чтобы страница не падала из-за nil -->
+        <% if @organizations.present? %>
+          <div class="text-center text-muted small mt-1" style="font-size: 0.75rem;">
+            <%= page_entries_info @organizations %>
+          </div>
+        <% end %>
 
       <% end %>
     </div>

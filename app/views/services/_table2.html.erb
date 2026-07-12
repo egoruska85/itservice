@@ -7,7 +7,7 @@
         <h3 class="fw-bold mb-0" style="font-family: 'BankGothic', sans-serif; font-size: 20px;">
           <i class="bi bi-hdd-network text-success me-2"></i>Серверное оборудование
         </h3>
-        <span class="badge bg-light text-secondary border">Всего услуг: <%= @services_2.count %></span>
+        <span class="badge bg-light text-secondary border">Всего услуг: <%= @services.count %></span>
       </div>
       <div class="bg-success bg-opacity-10 mt-2" style="height: 1px; width: 100%;"></div>
     </caption>
@@ -23,7 +23,7 @@
 
     <%# Тело таблицы %>
     <tbody>
-      <% @services_2.each do |service| %>
+      <% @services.each do |service| %>
         <tr>
           <%# Номер услуги (ID) %>
           <td class="text-center">
