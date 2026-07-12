@@ -6,6 +6,7 @@ class OrganizationsController < ApplicationController
 
     # Инициализируем пустой объект для формы добавления новых реквизитов
     @companydetail = current_user.companydetails.build
+    @organizations = Organization.page(params[:page]).per(10)
   end
 
   def show

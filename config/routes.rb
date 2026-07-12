@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       post :create_company_details
     end
   end
+  resources :orders
   resources :privates
   resources :backoffices do
     member {get :organization}
