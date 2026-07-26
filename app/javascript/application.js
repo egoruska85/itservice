@@ -105,36 +105,41 @@ document.addEventListener("DOMContentLoaded", () => {
   updateCarousel();
 });
 
-document.addEventListener("turbo:load", () => { // Используйте "DOMContentLoaded", если нет Turbo/Turbolinks
-  const cardContainers = document.querySelectorAll('.owl-card-perspective');
+// Замените document.addEventListener("DOMContentLoaded", ... на это:
+document.addEventListener("turbo:load", () => {
+  const track = document.getElementById("owlTrack");
+  const prevBtn = document.getElementById("owlPrev");
+  const nextBtn = document.getElementById("owlNext");
+  const dotsContainer = document.getElementById("owlDots");
 
-  cardContainers.forEach(container => {
-    const parallaxItem = container.querySelector('.owl-card-parallax');
+  if (!track) return; // Важно: предотвращает ошибки на страницах без карусели
 
-    container.addEventListener('mousemove', (e) => {
-      const rect = container.getBoundingClientRect();
+  const items = track.querySelectorAll(".owl-item");
+  let currentIndex = 0;
 
-      // Находим центр контейнера карточки
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
+  // ... (весь остальной ваш код функций getVisibleItemsCount, createDots, updateCarousel)
 
-      // Максимальный угол наклона — 15 градусов
-      const tiltX = -(y / (rect.height / 2)) * 15;
-      const tiltY = (x / (rect.width / 2)) * 15;
+  // Перед вызовом createDots() очистите обработчики кликов со стрелок,
+  // чтобы они не срабатывали дважды при повторных переходах:
+  const newNextBtn = nextBtn.cloneNode(true);
+  const newPrevBtn = prevBtn.cloneNode(true);
+  nextBtn.parentNode.replaceChild(newNextBtn, nextBtn);
+  prevBtn.parentNode.replaceChild(newPrevBtn, prevBtn);
 
-      // Наклоняем элемент
-      parallaxItem.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
-    });
-
-    // Плавный возврат в исходную позицию, когда мышь уходит
-    container.addEventListener('mouseleave', () => {
-      parallaxItem.style.transition = 'transform 0.5s ease-out';
-      parallaxItem.style.transform = 'rotateX(0deg) rotateY(0deg)';
-    });
-
-    // Убираем задержку при повторном входе мыши для мгновенного отклика
-    container.addEventListener('mouseenter', () => {
-      parallaxItem.style.transition = 'transform 0.05s ease-out';
-    });
+  // Привязываем события заново к чистым кнопкам
+  newNextBtn.addEventListener("click", () => {
+    const maxScrollIndex = items.length - getVisibleItemsCount();
+    currentIndex = (currentIndex < maxScrollIndex) ? currentIndex + 1 : 0;
+    updateCarousel();
   });
+
+  newPrevBtn.addEventListener("click", () => {
+    const maxScrollIndex = items.length - getVisibleItemsCount();
+    currentIndex = (currentIndex > 0) ? currentIndex - 1 : maxScrollIndex;
+    updateCarousel();
+  });
+
+  // Инициализация
+  createDots();
+  updateCarousel();
 });
