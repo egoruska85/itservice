@@ -35,7 +35,7 @@
               <%# Описание услуги %>
               <div class="fs-5 text-secondary lh-lg">
                 <% if @service.explanation.present? %>
-                  <%= simple_format @service.explanation %>
+                  <%= simple_format @service.explanation, style:"font-size: 15px;" %>
                 <% else %>
                   <p class="text-muted">Описание для данной услуги временно отсутствует. Вы можете уточнить подробности у нашего специалиста.</p>
                 <% end %>
