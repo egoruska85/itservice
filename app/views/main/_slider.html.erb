@@ -1,0 +1,40 @@
+<div class="owl-container" data-controller="owl-carousel">
+  <div class="owl-carousel-wrapper">
+
+    <!-- Кнопка Назад: привязана через data-action -->
+    <button class="owl-nav-btn owl-prev-btn" data-action="click->owl-carousel#prev">❮</button>
+
+    <div class="owl-viewport">
+      <!-- Лента: добавлена цель trackTarget -->
+      <div class="owl-track" id="owlTrack" data-owl-carousel-target="track">
+
+        <% @services.each do |service| %>
+          <!-- Карточка: добавлена цель itemTarget -->
+          <div class="owl-item" data-owl-carousel-target="item">
+            <div class="owl-card-perspective">
+              <div class="owl-card-parallax">
+                <div class="owl-card">
+                  <% if service.pictogramm.attached? %>
+                    <div class="owl-icon">
+                      <%= service.pictogramm.download.html_safe %>
+                    </div>
+                  <% end %>
+                  <h3 class="owl-title"><%= service.name %></h3>
+                  <%= simple_format truncate(service.explanation, length: 100), class: "owl-text" %>
+                  <%= link_to 'Подробнее', service_path(service), class:"owl-link" %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+      </div>
+    </div>
+
+    <!-- Кнопка Вперед: привязана через data-action -->
+    <button class="owl-nav-btn owl-next-btn" data-action="click->owl-carousel#next">❯</button>
+  </div>
+
+  <!-- Точки: добавлена цель dotsTarget -->
+  <div class="owl-dots" data-owl-carousel-target="dots"></div>
+</div>

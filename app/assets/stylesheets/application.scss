@@ -10,3 +10,298 @@
        url("/fonts/bankgothicmdbt_medium.otf") format("woff"),
        /* Если браузер не поддерживает woff2, загрузит woff */
 }
+
+/* Главный контейнер */
+.owl-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Обертка для позиционирования элементов */
+.owl-carousel-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Окно просмотра (прячет карточки, выходящие за край) */
+.owl-viewport {
+  overflow: hidden;
+  width: 100%;
+  padding: 15px 0;
+}
+
+/* Бегущая лента с карточками */
+.owl-track {
+  display: flex;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Расчет ширины: 3 карточки на больших экранах */
+.owl-item {
+  flex: 0 0 33.3333%;
+  box-sizing: border-box;
+  padding: 0 10px; /* Отступы между карточками */
+}
+
+/* Стили самой карточки */
+.owl-card {
+  background: #ffffff;
+  padding: 30px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  height: 100%;
+  box-sizing: border-box;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.owl-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Круглый контейнер под иконку */
+.owl-icon {
+  width: 60px;
+  height: 60px;
+  background: #f8f9fa;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 24px;
+}
+
+.owl-title {
+  margin: 0 0 10px 0;
+  font-size: 20px;
+  color: #212529;
+}
+
+.owl-text {
+  font-size: 14px;
+  color: #6c757d;
+  line-height: 1.5;
+  margin: 0 0 20px 0;
+}
+
+.owl-link {
+  display: inline-block;
+  padding: 8px 24px;
+  border: 1px solid #212529;
+  color: #212529;
+  text-decoration: none;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.owl-link:hover {
+  background: #212529;
+  color: #ffffff;
+}
+
+/* Фирменные кнопки Owl (серые, овальные) */
+.owl-nav-btn {
+  position: absolute;
+  background: #d6d6d6;
+  color: #fff;
+  border: none;
+  width: 32px;
+  height: 40px;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 10;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
+
+.owl-nav-btn:hover {
+  background: #869791;
+}
+
+/* Позиционирование стрелок наружу на больших экранах */
+@media (min-width: 1200px) {
+  .owl-prev-btn { left: -45px; }
+  .owl-next-btn { right: -45px; }
+}
+@media (max-width: 1199px) {
+  .owl-prev-btn { left: 15px; }
+  .owl-next-btn { right: 15px; }
+}
+
+/* Навигационные точки (dots) */
+.owl-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.owl-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #d6d6d6;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.owl-dot.active {
+  background: #869791;
+}
+
+/* Адаптивность: 2 карточки на планшетах */
+@media (max-width: 992px) {
+  .owl-item { flex: 0 0 50%; }
+}
+
+/* Адаптивность: 1 карточка на мобильных */
+@media (max-width: 576px) {
+  .owl-item { flex: 0 0 100%; }
+}
+
+
+
+/* Базовые стили для карточки */
+.owl-card {
+  position: relative;
+  overflow: hidden; /* Чтобы затемнение не выходило за радиус скругления углов */
+  z-index: 1;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Создаем скрытый слой затемнения */
+.owl-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Цвет затемнения (черный с 50% прозрачности) */
+  opacity: 0;
+  z-index: 2; /* Поверх иконки и текста, но под ссылкой */
+  transition: opacity 0.3s ease;
+  pointer-events: none; /* Чтобы слой не мешал кликам */
+}
+
+/* Изначально скрываем кнопку «Подробнее» */
+.owl-link {
+  position: relative; /* Или absolute, в зависимости от вашей верстки */
+  z-index: 3; /* Кнопка должна быть выше слоя затемнения */
+  opacity: 0;
+  transform: translateY(15px); /* Смещаем чуть вниз для красивого эффекта взлета */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* --- ЭФФЕКТЫ ПРИ НАВЕДЕНИИ --- */
+
+.owl-card:hover {
+  transform: translateY(-5px); /* Карточка слегка приподнимается (опционально) */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Активируем затемнение фона */
+.owl-card:hover::before {
+  opacity: 1;
+}
+
+/* Проявляем и поднимаем кнопку */
+.owl-card:hover .owl-link {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* Контейнер активирует 3D пространство */
+.owl-card-perspective {
+  perspective: 1000px;
+  width: 100%;
+  height: 100%;
+}
+
+/* Элемент, который наклоняется скриптом */
+.owl-card-parallax {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.1s ease-out;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Сама карточка и ее базовое состояние */
+.owl-card {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  /* Приподнимаем базовый контент в 3D пространстве */
+  transform: translateZ(20px);
+  transition: box-shadow 0.3s ease;
+}
+
+/* Слой с градиентом (изначально прозрачный) */
+.owl-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.4) 60%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  opacity: 0;
+  z-index: 2;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+/* Элементы контента выталкиваем еще выше вперед */
+.owl-icon, .owl-title, .owl-text {
+  transform: translateZ(40px);
+  position: relative;
+  z-index: 1;
+}
+
+/* Кнопка «Подробнее» на самом верхнем 3D-уровне */
+.owl-link {
+  position: relative;
+  z-index: 3;
+  opacity: 0;
+  /* Сильнее выдвигаем вперед и смещаем вниз для анимации взлета */
+  transform: translateZ(60px) translateY(15px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  display: inline-block;
+}
+
+/* --- СОСТОЯНИЕ ПРИ НАВЕДЕНИИ --- */
+
+/* Проявляем градиент */
+.owl-card-perspective:hover .owl-card::before {
+  opacity: 1;
+}
+
+/* Делаем тень глубже при наклоне */
+.owl-card-perspective:hover .owl-card {
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.25);
+}
+
+/* Эффектное появление кнопки */
+.owl-card-perspective:hover .owl-link {
+  opacity: 1;
+  transform: translateZ(60px) translateY(0);
+}
